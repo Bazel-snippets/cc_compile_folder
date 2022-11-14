@@ -1,8 +1,13 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("generate_source.bzl", "generate_source")
 load("create_tree_artifact.bzl", "create_tree_artifact")
 
 platform(
     name = "any",
+)
+
+generate_source(
+    name = "generated_source",
 )
 
 create_tree_artifact(
@@ -14,5 +19,6 @@ cc_library(
     srcs = [
         "standalone_source_file.cpp",
         "tree_artifact",
+        "generated_source",
     ],
 )

@@ -1,15 +1,5 @@
-def _any_impl(settings, attr):
-    return {
-        "//command_line_option:platforms": [":any"],
-    }
-
-any_transition = transition(
-    implementation = _any_impl,
-    inputs = [],
-    outputs = [
-        "//command_line_option:platforms",
-    ],
-)
+# buildifier: disable=module-docstring
+load("any_transition.bzl", "any_transition")
 
 def _impl(ctx):
     tree_artifact = ctx.actions.declare_directory(ctx.attr.name)
