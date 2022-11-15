@@ -1,5 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("generate_source.bzl", "generate_source")
+load("symlink_tree_artifact.bzl", "symlink_tree_artifact")
 load("create_tree_artifact.bzl", "create_tree_artifact")
 
 platform(
@@ -14,11 +15,17 @@ create_tree_artifact(
     name = "tree_artifact",
 )
 
+symlink_tree_artifact(
+    name = "relocated_tree_artifact",
+    src = "tree_artifact",
+)
+
 cc_library(
     name = "repro",
     srcs = [
         "standalone_source_file.cpp",
-        "tree_artifact",
+        "relocated_tree_artifact",  # Object file for this source is generated in the output folder for root configuration
+        "tree_artifact",  # BUG: Object file for this source is generated in the output folder for "any" platform configuration.
         "generated_source",
     ],
 )
